@@ -1,1 +1,528 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Workshop on Deep Research</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --text-color: #333;
+            --light-text: #f8f9fa;
+            --background-color: #f9f9f9;
+            --card-background: #ffffff;
+            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            line-height: 1.6;
+        }
+        
+        .header {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 45px;
+            margin-right: 15px;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .logo span {
+            font-size: 1.4rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        
+        .nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .nav-item {
+            padding: 0.5rem 1rem;
+            color: var(--light-text);
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-item:hover {
+            background-color: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+        
+        .nav-item.active {
+            background-color: var(--secondary-color);
+            font-weight: bold;
+        }
+        
+        .hero {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                              url('https://upload.wikimedia.org/wikipedia/commons/c/c2/Panorama_for_the_exterior_of_Palais_des_Congr%C3%A8s_de_Montr%C3%A9al.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 600px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: var(--light-text);
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+        
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .hero-box {
+            background-color: rgba(44, 62, 80, 0.85);
+            padding: 2rem;
+            margin-top: 20px;
+            max-width: 600px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .hero-box h2 {
+            margin-top: 0;
+            color: var(--light-text);
+        }
+        
+        .section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: var(--card-background);
+            box-shadow: var(--shadow);
+            border-radius: 8px;
+            margin-top: -50px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 2.5rem;
+            color: var(--primary-color);
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--secondary-color);
+        }
+        
+        .content {
+            line-height: 1.8;
+            font-size: 1.1rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .content p {
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            .nav {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section {
+                padding: 3rem 1.5rem;
+                margin-top: -30px;
+            }
+            
+            .content p {
+                text-align: left;
+            }
+        }
+        
+        .program-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .program-table th, .program-table td {
+            padding: 8px 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .program-table th {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+        }
+        
+        .program-table tr:nth-child(even) {
+            background-color: rgba(0,0,0,0.03);
+        }
+        
+        .program-table td:first-child {
+            width: 180px;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <img src="assets/cover.jpg" alt="Logo">
+            <span>WDR 2025</span>
+        </div>
+        <div class="nav">
+            <a href="#overview" class="nav-item active">Overview</a>
+            <a href="#call-for-papers" class="nav-item">Call for Papers</a>
+            <a href="#program" class="nav-item">Program</a>
+            <a href="#organizers" class="nav-item">Organizers</a>
+        </div>
+    </div>
+    
+    <div class="hero">
+        <div class="hero-content">
+            <h1>A Workshop on Deep Research</h1>
+            <div class="hero-box">
+                <h2>Under Construction</h2>
+                <p>October 7-10, 2025</p>
+                <p>Location: Palais des Congrès, Montreal, Canada</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="section" id="overview">
+        <h2 class="section-title">Overview</h2>
+        <div class="content">
+            <h3>Introduction to Deep Research Agents</h3>
+            <ul>
+                <li>Deep research agents can independently search, analyze, and combine information from many online sources.</li>
+                <li>They produce detailed, well-cited reports, akin to the work of a skilled research analyst.</li>
+                <li>Growing interest from labs and companies like Meta, OpenAI, Google, and Perplexity.</li>
+                <li>This workshop provides a timely space for sharing research, submitting papers, and evaluating models in a competition track.</li>
+            </ul>
+            
+            <h3>Benefits of Deep Research</h3>
+            <ul>
+                <li>Saves time on complex information tasks, which is useful across various fields such as science, finance, and policy.</li>
+                <li>Represents a major step toward building AI systems capable of extracting deep insights from diverse knowledge sources.</li>
+                <li>Advances in AI capabilities include synthesizing information, evaluating credibility, and producing coherent analyses.</li>
+            </ul>
+            
+            <h3>Challenges in the Field</h3>
+            <ul>
+                <li>Developing systems that can retrieve information and understand context.</li>
+                <li>Identifying contradictions and making reasoned judgments about the quality and relevance of sources.</li>
+                <li>Considerations around citation practices and transparency in methodology.</li>
+                <li>Addressing potential biases in information selection and presentation.</li>
+            </ul>
+            
+            <h3>Workshop Details</h3>
+            <ul>
+                <li>Includes paper submissions, 6+ invited speakers, 4+ oral presentations, a poster session, and a competition track for model evaluation.</li>
+                <li>Welcomes contributions from researchers on all aspects of deep research agents.</li>
+                <li>Topics include information retrieval, knowledge synthesis, reasoning, and evaluation methodologies.</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="section" id="call-for-papers">
+        <h2 class="section-title">Call for Papers</h2>
+        <div class="content">
+            <p>We invite submissions on all aspects of deep research agents, including but not limited to:</p>
+            <ul>
+                <li>Novel architectures for information retrieval and synthesis</li>
+                <li>Methods for evaluating source credibility and managing contradictory information</li>
+                <li>Techniques for generating well-structured, coherent research reports</li>
+                <li>Approaches to citation and attribution in AI-generated content</li>
+                <li>Ethical considerations in automated research</li>
+                <li>Evaluation methodologies for deep research systems</li>
+            </ul>
+            
+            <p><strong>Important Dates:</strong></p>
+            <ul>
+                <li>Submission Deadline: TBA</li>
+                <li>Notification of Acceptance: TBA</li>
+                <li>Camera-Ready Deadline: TBA</li>
+                <li>Workshop Date: To be held on a day between October 7-10, 2025</li>
+            </ul>
+            
+            <p><strong>Submission Guidelines:</strong> Papers should be submitted in PDF format following the conference template. Submissions can be up to 8 pages (excluding references) for full papers and up to 4 pages for short papers. All submissions will undergo double-blind peer review.</p>
+            
+            <p>Submit your papers through the workshop submission portal (TBD).</p>
+        </div>
+    </div>
+    
+    <div class="section" id="program">
+        <h2 class="section-title">Program</h2>
+        <div class="content">
+            <p>This is the tentative program, which may be subject to changes. Event times shown in the schedule are local times in Seattle WA, USA.</p>
+            
+            <table class="program-table">
+                <tr>
+                    <th>Time</th>
+                    <th>Program</th>
+                </tr>
+                <tr>
+                    <td>09:00 AM-09:10 AM</td>
+                    <td>Opening Remarks</td>
+                </tr>
+                <tr>
+                    <td>09:10 AM-09:55 AM</td>
+                    <td>Invited Talk 1</td>
+                </tr>
+                <tr>
+                    <td>09:55 AM-10:40 AM</td>
+                    <td>Poster presentation & Coffee Break</td>
+                </tr>
+                <tr>
+                    <td>10:40 AM-11:25 AM</td>
+                    <td>Invited Talk 2</td>
+                </tr>
+                <tr>
+                    <td>11:25 AM-12:10 PM</td>
+                    <td>Invited Talk 3</td>
+                </tr>
+                <tr>
+                    <td>12:10 PM-01:10 PM</td>
+                    <td>Lunch Break</td>
+                </tr>
+                <tr>
+                    <td>01:10 PM-01:15 PM</td>
+                    <td>Spotlight Paper Presentation 1</td>
+                </tr>
+                <tr>
+                    <td>01:15 PM-01:20 PM</td>
+                    <td>Spotlight Paper Presentation 2</td>
+                </tr>
+                <tr>
+                    <td>01:20 PM-01:25 PM</td>
+                    <td>Spotlight Paper Presentation 3</td>
+                </tr>
+                <tr>
+                    <td>01:25 PM-02:10 PM</td>
+                    <td>Invited Talk 4</td>
+                </tr>
+                <tr>
+                    <td>02:10 PM-02:55 PM</td>
+                    <td>Invited Talk 5</td>
+                </tr>
+                <tr>
+                    <td>02:55 PM-03:40 PM</td>
+                    <td>Poster presentation & Coffee Break</td>
+                </tr>
+                <tr>
+                    <td>03:40 PM-03:45 PM</td>
+                    <td>Spotlight Paper Presentation 4</td>
+                </tr>
+                <tr>
+                    <td>03:45 PM-03:50 PM</td>
+                    <td>Spotlight Paper Presentation 5</td>
+                </tr>
+                <tr>
+                    <td>03:50 PM-03:55 PM</td>
+                    <td>Spotlight Paper Presentation 6</td>
+                </tr>
+                <tr>
+                    <td>03:55 PM-04:40 PM</td>
+                    <td>Invited Talk 6</td>
+                </tr>
+                <tr>
+                    <td>04:40 PM-05:25 PM</td>
+                    <td>Invited Talk 7</td>
+                </tr>
+                <tr>
+                    <td>05:25 PM-05:35 PM</td>
+                    <td>Award Announcement & Closing Remarks</td>
+                </tr>
+                <tr>
+                    <td>05:35 PM-8:00 PM</td>
+                    <td>Social & Mixer</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    
+    <div class="section" id="organizers">
+        <h2 class="section-title">Organizers</h2>
+        <div class="content">
+            <div class="organizers-grid">
+                <div class="organizer">
+                    <!-- <img src="https://via.placeholder.com/150x150/1a5f7a/ffffff?text=IL" alt="Dr. Issam H. Laradji"> -->
+                    <h3>Dr. Issam H. Laradji</h3>
+                    <p>ServiceNow Research</p>
+                    <p><a href="mailto:issam.laradji@servicenow.com">issam.laradji@servicenow.com</a></p>
+                    <p class="bio">Research scientist focusing on deep learning, large language models, and their applications to structured and unstructured data analysis. Extensive experience in designing scalable AI solutions for enterprise and scientific applications.</p>
+                </div>
+                
+                <div class="organizer">
+                    <!-- <img src="https://via.placeholder.com/150x150/1a5f7a/ffffff?text=AR" alt="Amrutha Varshini Ramesh"> -->
+                    <h3>Amrutha Varshini Ramesh</h3>
+                    <p>University of British Columbia</p>
+                    <p><a href="mailto:amrutha@cs.ubc.ca">amrutha@cs.ubc.ca</a></p>
+                    <p class="bio">Graduate researcher whose work lies at the intersection of optimization and machine learning, with a particular focus on agentic AI and deep research systems. Interested in leveraging large-scale models to improve automated decision-making and interpretability in AI-driven analytics.</p>
+                </div>
+                
+                <div class="organizer">
+                    <!-- <img src="https://via.placeholder.com/150x150/1a5f7a/ffffff?text=AA" alt="Amirhossein Abaskohi"> -->
+                    <h3>Amirhossein Abaskohi</h3>
+                    <p>University of British Columbia</p>
+                    <p><a href="mailto:aabaskoh@cs.ubc.ca">aabaskoh@cs.ubc.ca</a></p>
+                    <p class="bio">Graduate researcher at the UBC NLP group, focusing on large language models and their integration into data analysis pipelines. Develops efficient techniques for applying LLMs to real-world datasets.</p>
+                </div>
+                
+                <div class="organizer">
+                    <!-- <img src="https://via.placeholder.com/150x150/1a5f7a/ffffff?text=SN" alt="Shailesh Nanisetty"> -->
+                    <h3>Shailesh Nanisetty</h3>
+                    <p>University of Toronto</p>
+                    <p><a href="mailto:shailesh.nanisetty@mail.utoronto.ca">shailesh.nanisetty@mail.utoronto.ca</a></p>
+                    <p class="bio">Researcher focusing on real-time multimodal systems and LLM-based generative applications. Interested in building AI-driven analytics agents that bridge human behavior, language, and data.</p>
+                </div>
+                
+                <div class="organizer">
+                    <!-- <img src="https://via.placeholder.com/150x150/1a5f7a/ffffff?text=CG" alt="Chirag Goel"> -->
+                    <h3>Chirag Goel</h3>
+                    <p>University of Montreal, Mila</p>
+                    <p><a href="mailto:chirag.goel@umontreal.ca">chirag.goel@umontreal.ca</a></p>
+                    <p class="bio">Graduate researcher at Mila, specializing in machine learning and natural language processing. Works on advanced NLP models for conversational systems, integrating both language and audio modalities.</p>
+                </div>
+            </div>
+            
+            <style>
+                .organizers-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                    gap: 2rem;
+                    margin-top: 2rem;
+                }
+                
+                .organizer {
+                    background-color: var(--card-background);
+                    border-radius: 8px;
+                    padding: 1.5rem;
+                    box-shadow: var(--shadow);
+                    transition: transform 0.3s ease;
+                    text-align: center;
+                }
+                
+                .organizer:hover {
+                    transform: translateY(-5px);
+                }
+                
+                .organizer img {
+                    width: 150px;
+                    height: 150px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                    margin-bottom: 1rem;
+                    border: 3px solid var(--secondary-color);
+                }
+                
+                .organizer h3 {
+                    margin: 0.5rem 0;
+                    color: var(--primary-color);
+                }
+                
+                .organizer p {
+                    margin: 0.3rem 0;
+                    text-align: center;
+                }
+                
+                .organizer .bio {
+                    margin-top: 1rem;
+                    font-size: 0.9rem;
+                    text-align: justify;
+                    color: #555;
+                }
+                
+                .organizer a {
+                    color: var(--secondary-color);
+                    text-decoration: none;
+                    transition: color 0.3s ease;
+                }
+                
+                .organizer a:hover {
+                    color: var(--accent-color);
+                    text-decoration: underline;
+                }
+                
+                @media (max-width: 768px) {
+                    .organizers-grid {
+                        grid-template-columns: 1fr;
+                    }
+                }
+            </style>
+            
+            <h3>Program Committee</h3>
+            <p>Our program committee includes over 30 experts from academia and industry. The full list will be available soon.</p>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Workshop on Deep Research. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">Contact Us</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Code of Conduct</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
